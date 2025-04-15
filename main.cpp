@@ -90,7 +90,7 @@ void removeNumbers(int board[SIZE][SIZE], int count) {
 int main(){
 
     srand(time(0));
-
+     int row,column,number;
     int board[SIZE][SIZE] = {0};
     cout << "==============================\n";
     cout << " Welcome to Sudoku!\n";
@@ -125,8 +125,14 @@ int main(){
             break;
             
     }
+ cout <<"Give me the row: \n">>;
+cin>>row;
+cout <<"Give me the column: \n">>;
+cin>>colum;
+cout <<"Give me the number: \n">>;
+cin>>number;
 
-    
+
 
    return 0; 
     
