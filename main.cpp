@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+//treis prospathies//
 using namespace std;//dinei ta diafora epipeda
  const int SIZE = 9;
    void showDifficultyMenu() {
@@ -21,7 +22,7 @@ void displayBoard(int board[SIZE][SIZE]) {//pinakas sudoku xvris noumera
         cout << "| ";
         for (int j = 0; j < SIZE; j++) {
             if (board[i][j] == 0)
-                cout << ". ";
+                cout << "  ";
             else
                 cout << board[i][j] << " ";
             if ((j + 1) % 3 == 0) cout << "| ";
@@ -35,7 +36,7 @@ void displayBoard(int board[SIZE][SIZE]) {//pinakas sudoku xvris noumera
 bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { //an o ariuthmos poy ua baleis yparxei idi  h sto tetragvno 3*3
 
     for (int x = 0; x < SIZE; x++) {
-        if (board[row][x] == num || board[x][col] == num)
+        if (board[row][x] == num || board[x][col] == num)  
             return false;
     }
 
@@ -90,7 +91,7 @@ void removeNumbers(int board[SIZE][SIZE], int count) {
 int main(){
 
     srand(time(0));
-     int row,column,number;
+    int row,column,number;
     int board[SIZE][SIZE] = {0};
     cout << "==============================\n";
     cout << " Welcome to Sudoku!\n";
@@ -99,7 +100,6 @@ int main(){
     showDifficultyMenu();
     cin >>ep;//elexos egkyrothtas
     int visibleNumbers;
-    
     if (ep == 1) visibleNumbers = 36;//me bash thn analogi dyskolia soy emfanizei analoga ariumous
     else if (ep == 2) visibleNumbers = 32;
     else visibleNumbers = 26;
@@ -122,16 +122,16 @@ int main(){
             break;
         default:
             cout << "you didnt chose correctly.\n";
-            break;
-            
-    }
- cout <<"Give me the row: \n">>;
+            break;     
+    };
+cout<<"If you want help press * \n";
+cout <<"Give me the row:";
 cin>>row;
-cout <<"Give me the column: \n">>;
-cin>>colum;
-cout <<"Give me the number: \n">>;
+cout <<"Give me the column:";
+cin>>column;
+cout <<"Give me the number:";
 cin>>number;
-
+//synartisi gia elegxous 
 
 
    return 0; 
