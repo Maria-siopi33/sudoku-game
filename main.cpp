@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 //treis prospathies//
+//dokimi marias
 using namespace std;//dinei ta diafora epipeda
  const int SIZE = 9;
    void showDifficultyMenu() {
@@ -14,8 +15,6 @@ using namespace std;//dinei ta diafora epipeda
     cout << "3. Hard\n";
     cout << "ep: ";
 }
-
-
 void displayBoard(int board[SIZE][SIZE]) {//pinakas sudoku xvris noumera
     cout << "-------------------------\n";
     for (int i = 0; i < SIZE; i++) {
@@ -51,7 +50,7 @@ bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { //an o ariuthmos
     return true;
 }
 
-// gemizei anadromika ton pinaka 
+// gemizei anadromika ton pinaka
 bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) {
     if (row == SIZE - 1 && col == SIZE) return true;
     if (col == SIZE) {
@@ -103,7 +102,7 @@ int main(){
     if (ep == 1) visibleNumbers = 36;//me bash thn analogi dyskolia soy emfanizei analoga ariumous
     else if (ep == 2) visibleNumbers = 32;
     else visibleNumbers = 26;
-    
+   
     fillSudoku(board);
     removeNumbers(board, visibleNumbers);
    
@@ -122,7 +121,7 @@ int main(){
             break;
         default:
             cout << "you didnt chose correctly.\n";
-            break;     
+            break;    
     };
 cout<<"If you want help press * \n";
 cout <<"Give me the row:";
@@ -131,14 +130,12 @@ cout <<"Give me the column:";
 cin>>column;
 cout <<"Give me the number:";
 cin>>number;
-//synartisi gia elegxous 
+//synartisi gia elegxous
 
 
-   return 0; 
-    
-    
+   return 0;
+   
+   
 }
 
 
-
- 
