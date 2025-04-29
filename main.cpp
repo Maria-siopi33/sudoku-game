@@ -12,14 +12,15 @@ const int SIZE = 9;
 
 void showDifficultyMenu() {
     cout << "\nChoose difficulty:\n";
-    cout << "1. Easy\n";
+	cout << "1. Easy\n";
     cout << "2. Medium\n";
     cout << "3. Hard\n";
+    cout << "0. Exit\n";
     cout << "Your choice: ";
 }
 
 void displayBoard(int board[SIZE][SIZE]) {
-    cout << "\n 1 2 3 4 5 6 7 8 9 \n";
+    cout << "\n    1 2 3   4 5 6   7 8 9 \n";
     cout << " ---------------------------\n";
     for (int i = 0; i < SIZE; i++) {
         if (i % 3 == 0 && i != 0)
@@ -29,7 +30,7 @@ void displayBoard(int board[SIZE][SIZE]) {
             if (j % 3 == 0 && j != 0)
                 cout << "| ";
             if (board[i][j] == 0)
-                cout << " ";
+                cout << "  ";
             else
                 cout << board[i][j] << " ";
         }
@@ -102,16 +103,13 @@ void playSudoku(int board[SIZE][SIZE]) {
     int chances = 3;
 
     while (!isBoardFull(board)) {
-        cout << "\nEnter row (1-9), column (1-9), and number (1-9), or 0 0 0 to quit: ";
+        cout << "\nEnter row (1-9), column (1-9), and number (1-9):";
         cin >> row >> col >> num;
 
-        if (row == 0 && col == 0 && num == 0) {
-            cout << "You exited the game.\n";
-            break;
-        }
-
-        row--; col--;
-
+		//gia na mpainoun ston pinaka
+        row--; 
+		col--;
+	
         if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
             if (board[row][col] == 0 && isSafe(board, row, col, num)) {
                 board[row][col] = num;
@@ -150,16 +148,25 @@ int main() {
     showDifficultyMenu();
     cin >> ep;
     
-    while (ep < 1 || ep > 3) {
-        cout << "Invalid input.Please enter a number between 1 and 3.";
+    while (ep < 0 || ep > 3) {
+        cout << "Invalid input.Please enter a number between 0 and 3.(0 for exit)";
         showDifficultyMenu();
         cin >> ep;
     }
 
-    if (ep == 1) visibleNumbers = 36;
-    else if (ep == 2) visibleNumbers = 32;
-    else visibleNumbers = 26;
-
+    if (ep == 1) 
+		visibleNumbers = 36;
+    else if (ep == 2) 
+		visibleNumbers = 32;
+    else if (ep ==3) 
+		visibleNumbers = 26;
+	else{
+    	auto end = steady_clock::now();
+    	auto duration = duration_cast<seconds>(end - start).count();
+    	cout << "You exited the game.\n";
+		cout << "Time taken: " << duration << " seconds.\n";
+		return 0;
+	}
     fillSudoku(board);
     removeNumbers(board, visibleNumbers);
 
@@ -176,9 +183,6 @@ int main() {
     //checkInput(board);
     playSudoku(board);
 
-    auto end = steady_clock::now();
-    auto duration = duration_cast<seconds>(end - start).count();
-    cout << "Time taken: " << duration << " seconds.\n";
 
     return 0;
 }
