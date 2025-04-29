@@ -4,39 +4,43 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-//treis prospathies//
-//dokimi marias
-//gia na doume twRa
-using namespace std;//dinei ta diafora epipeda
- const int SIZE = 9;
-   void showDifficultyMenu() {
-    cout << "\nChoose difficullty:\n";
+#include <chrono>
+
+using namespace std;
+
+const int SIZE = 9;
+
+void showDifficultyMenu() {
+    cout << "\nChoose difficulty:\n";
     cout << "1. Easy\n";
     cout << "2. Medium\n";
     cout << "3. Hard\n";
-    cout << "ep: ";
+    cout << "Your choice: ";
 }
-void displayBoard(int board[SIZE][SIZE]) {//pinakas sudoku xvris noumera
-    cout << "-------------------------\n";
+
+void displayBoard(int board[SIZE][SIZE]) {
+    cout << "\n 1 2 3 4 5 6 7 8 9 \n";
+    cout << " ---------------------------\n";
     for (int i = 0; i < SIZE; i++) {
-        cout << "| ";
+        if (i % 3 == 0 && i != 0)
+            cout << " ---------------------------\n";
+        cout << i + 1 << " | ";
         for (int j = 0; j < SIZE; j++) {
+            if (j % 3 == 0 && j != 0)
+                cout << "| ";
             if (board[i][j] == 0)
-                cout << "  ";
+                cout << " ";
             else
                 cout << board[i][j] << " ";
-            if ((j + 1) % 3 == 0) cout << "| ";
         }
-        cout << endl;
-        if ((i + 1) % 3 == 0) cout << "-------------------------\n";
+        cout << "\n";
     }
+    cout << " ---------------------------\n";
 }
 
-// elexei an mporei na mpei o arithmos
-bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { //an o ariuthmos poy ua baleis yparxei idi  h sto tetragvno 3*3
-
+bool isSafe(int board[SIZE][SIZE], int row, int col, int num) {
     for (int x = 0; x < SIZE; x++) {
-        if (board[row][x] == num || board[x][col] == num)  
+        if (board[row][x] == num || board[x][col] == num)
             return false;
     }
 
@@ -51,7 +55,6 @@ bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { //an o ariuthmos
     return true;
 }
 
-// gemizei anadromika ton pinaka
 bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) {
     if (row == SIZE - 1 && col == SIZE) return true;
     if (col == SIZE) {
@@ -59,7 +62,7 @@ bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) {
         col = 0;
     }
     vector<int> nums = {1,2,3,4,5,6,7,8,9};
-    random_shuffle(nums.begin(), nums.end());//anakateyei ton arithmous se tyxaia seira.
+    random_shuffle(nums.begin(), nums.end());
 
     for (int num : nums) {
         if (isSafe(board, row, col, num)) {
@@ -70,7 +73,6 @@ bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) {
     }
     return false;
 }
-
 
 void removeNumbers(int board[SIZE][SIZE], int count) {
     vector<pair<int, int>> positions;
@@ -87,56 +89,96 @@ void removeNumbers(int board[SIZE][SIZE], int count) {
         board[r][c] = 0;
     }
 }
-
-int main(){
-
-    srand(time(0));
-    int row,column,number;
-    int board[SIZE][SIZE] = {0};
-    cout << "==============================\n";
-    cout << " Welcome to Sudoku!\n";
-    cout << "==============================\n";
-    int ep;//epilogi xrhsth
-    showDifficultyMenu();
-    cin >>ep;//elexos egkyrothtas
-    int visibleNumbers;
-    if (ep == 1) visibleNumbers = 36;//me bash thn analogi dyskolia soy emfanizei analoga ariumous
-    else if (ep == 2) visibleNumbers = 32;
-    else visibleNumbers = 26;
-   
-    fillSudoku(board);
-    removeNumbers(board, visibleNumbers);
-   
-    switch (ep) {
-        case 1:
-            cout << "Easy level\n";
-          displayBoard(board);
-            break;
-        case 2:
-            cout << "difficult level.\n";
-           displayBoard(board);
-            break;
-        case 3:
-            cout << "more difficult.\n";
-          displayBoard(board);
-            break;
-        default:
-            cout << "you didnt chose correctly.\n";
-            break;    
-    };
-cout<<"If you want help press * \n";
-cout <<"Give me the row:";
-cin>>row;
-cout <<"Give me the column:";
-cin>>column;
-cout <<"Give me the number:";
-cin>>number;
-//synartisi gia elegxous
-
-
-   return 0;
-   
-   
+bool isBoardFull(int board[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; ++i)
+        for (int j = 0; j < SIZE; ++j)
+            if (board[i][j] == 0)
+                return false;
+    return true;
 }
 
+void playSudoku(int board[SIZE][SIZE]) {
+    int row, col, num;
+    int chances = 3;
 
+    while (!isBoardFull(board)) {
+        cout << "\nEnter row (1-9), column (1-9), and number (1-9), or 0 0 0 to quit: ";
+        cin >> row >> col >> num;
+
+        if (row == 0 && col == 0 && num == 0) {
+            cout << "You exited the game.\n";
+            break;
+        }
+
+        row--; col--;
+
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
+            if (board[row][col] == 0 && isSafe(board, row, col, num)) {
+                board[row][col] = num;
+                displayBoard(board);
+            } else {
+                cout << "Invalid move! Either cell is filled or number is not valid.\n";
+                chances--;
+                cout << "Remaining chances: " << chances << "\n";
+                if (chances == 0) {
+                    cout << "No more chances. Game over.\n";
+                    break;
+                }
+            }
+        } else {
+            cout << "Invalid input. Try again.\n";
+        }
+    }
+
+    if (isBoardFull(board)) {
+        cout << "Congratulations! You've completed the Sudoku!\n";
+    }
+}
+
+int main() {
+    int ep;
+    int board[SIZE][SIZE] = {0};
+    int visibleNumbers;
+    srand(time(0));
+
+    using namespace std::chrono;
+    auto start = steady_clock::now();
+
+    cout << "==============================\n";
+    cout << " \tWelcome to Sudoku!\n";
+    cout << "==============================\n";
+    showDifficultyMenu();
+    cin >> ep;
+    
+    while (ep < 1 || ep > 3) {
+        cout << "Invalid input.Please enter a number between 1 and 3.";
+        showDifficultyMenu();
+        cin >> ep;
+    }
+
+    if (ep == 1) visibleNumbers = 36;
+    else if (ep == 2) visibleNumbers = 32;
+    else visibleNumbers = 26;
+
+    fillSudoku(board);
+    removeNumbers(board, visibleNumbers);
+
+    switch (ep) {
+        case 1: cout << "\tEasy level.\n"; break;
+        case 2: cout << "\tMedium level.\n"; break;
+        case 3: cout << "\tHard level.\n"; break;
+        default: cout << "\tYou didn't choose correctly.\n"; break;
+    }
+
+    displayBoard(board);
+
+    // Ενεργοποιημένη συνάρτηση για προσπάθειες χρήστη
+    //checkInput(board);
+    playSudoku(board);
+
+    auto end = steady_clock::now();
+    auto duration = duration_cast<seconds>(end - start).count();
+    cout << "Time taken: " << duration << " seconds.\n";
+
+    return 0;
+}
