@@ -6,6 +6,7 @@
 #include <algorithm>
 //treis prospathies//
 //dokimi marias
+//gia na doume twRa
 using namespace std;//dinei ta diafora epipeda
  const int SIZE = 9;
    void showDifficultyMenu() {
