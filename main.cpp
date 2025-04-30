@@ -8,9 +8,13 @@
 
 using namespace std;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 const int SIZE = 9;
 
+=======
+const int SIZE = 9;
+>>>>>>> Stashed changes
 =======
 const int SIZE = 9;
 >>>>>>> Stashed changes
@@ -24,11 +28,19 @@ void showDifficultyMenu() {
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void displayBoard(int board[SIZE][SIZE]) {
     cout << "\n    1 2 3   4 5 6   7 8 9 \n";
     cout << " ---------------------------\n";
     for (int i = 0; i < SIZE; i++) {
         if (i % 3 == 0 && i != 0)
+=======
+void displayBoard(int board[SIZE][SIZE], int chances = -1) {
+    cout << "\n    1 2 3   4 5 6   7 8 9 \n";//deiktes gia pio eykoly epilogh
+    cout << " ---------------------------\n";
+    for (int i = 0; i < SIZE; i++) {
+        if (i % 3 == 0 && i != 0) 
+>>>>>>> Stashed changes
 =======
 void displayBoard(int board[SIZE][SIZE], int chances = -1) {
     cout << "\n    1 2 3   4 5 6   7 8 9 \n";//deiktes gia pio eykoly epilogh
@@ -48,7 +60,14 @@ void displayBoard(int board[SIZE][SIZE], int chances = -1) {
         }
         cout << "\n";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+    }
+    cout << " ---------------------------\n";
+    if (chances >= 0) {
+        cout << "Remaining chances: " << chances << "/3\n";// na emfanizontai oi eykairies poy soy menoyn
+>>>>>>> Stashed changes
     }
     cout << " ---------------------------\n";
     if (chances >= 0) {
@@ -59,7 +78,11 @@ void displayBoard(int board[SIZE][SIZE], int chances = -1) {
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 bool isSafe(int board[SIZE][SIZE], int row, int col, int num) {
+=======
+bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { // elegxoi eisagvghs 
+>>>>>>> Stashed changes
 =======
 bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { // elegxoi eisagvghs 
 >>>>>>> Stashed changes
@@ -80,7 +103,11 @@ bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { // elegxoi eisag
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) {
+=======
+bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) { //periexei lymeno ton pinaka sudoku
+>>>>>>> Stashed changes
 =======
 bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) { //periexei lymeno ton pinaka sudoku
 >>>>>>> Stashed changes
@@ -103,7 +130,11 @@ bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) { //periexei ly
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void removeNumbers(int board[SIZE][SIZE], int count) {
+=======
+void removeNumbers(int board[SIZE][SIZE], int count) { //bgazei analoga me to epipedo dyskolias mia posothta arithmvn
+>>>>>>> Stashed changes
 =======
 void removeNumbers(int board[SIZE][SIZE], int count) { //bgazei analoga me to epipedo dyskolias mia posothta arithmvn
 >>>>>>> Stashed changes
@@ -123,7 +154,11 @@ void removeNumbers(int board[SIZE][SIZE], int count) { //bgazei analoga me to ep
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 bool isBoardFull(int board[SIZE][SIZE]) {
+=======
+bool isBoardFull(int board[SIZE][SIZE]) { //elexos an exei lythei to sudoku
+>>>>>>> Stashed changes
 =======
 bool isBoardFull(int board[SIZE][SIZE]) { //elexos an exei lythei to sudoku
 >>>>>>> Stashed changes
@@ -138,6 +173,7 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     int row, col, num;
     int chances = 3;
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     while (!isBoardFull(board)) {
         cout << "\nEnter row (1-9), column (1-9), and number (1-9): ";
@@ -234,6 +270,10 @@ int main() {
 =======
     displayBoard(board, chances);
 
+=======
+    displayBoard(board, chances);
+
+>>>>>>> Stashed changes
     while (!isBoardFull(board)) { 
         cout << "\nEnter row (1-9), column (1-9), and number (1-9): "; //eisagvgi mesa se synartisi
         cin >> row >> col >> num;
@@ -325,4 +365,7 @@ int main() {
     return 0;
 }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
