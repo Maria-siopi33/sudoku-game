@@ -12,7 +12,7 @@ const int SIZE = 9;
 
 void showDifficultyMenu() {
     cout << "\nChoose difficulty:\n";
-	cout << "1. Easy\n";
+    cout << "1. Easy\n";
     cout << "2. Medium\n";
     cout << "3. Hard\n";
     cout << "0. Exit\n";
@@ -90,6 +90,7 @@ void removeNumbers(int board[SIZE][SIZE], int count) {
         board[r][c] = 0;
     }
 }
+
 bool isBoardFull(int board[SIZE][SIZE]) {
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
@@ -98,30 +99,33 @@ bool isBoardFull(int board[SIZE][SIZE]) {
     return true;
 }
 
-void playSudoku(int board[SIZE][SIZE]) {
+void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     int row, col, num;
     int chances = 3;
 
     while (!isBoardFull(board)) {
-        cout << "\nEnter row (1-9), column (1-9), and number (1-9):";
+        cout << "\nEnter row (1-9), column (1-9), and number (1-9): ";
         cin >> row >> col >> num;
 
-		//gia na mpainoun ston pinaka
         row--; 
-		col--;
-	
+        col--;
+
         if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
-            if (board[row][col] == 0 && isSafe(board, row, col, num)) {
-                board[row][col] = num;
-                displayBoard(board);
-            } else {
-                cout << "Invalid move! Either cell is filled or number is not valid.\n";
-                chances--;
-                cout << "Remaining chances: " << chances << "\n";
-                if (chances == 0) {
-                    cout << "No more chances. Game over.\n";
-                    break;
+            if (board[row][col] == 0) {
+                if (solutionBoard[row][col] == num) {
+                    board[row][col] = num;
+                    displayBoard(board);
+                } else {
+                    cout << "Wrong number! That’s not the correct value for this cell.\n";
+                    chances--;
+                    cout << "Remaining chances: " << chances << "\n";
+                    if (chances == 0) {
+                        cout << "No more chances. Game over.\n";
+                        break;
+                    }
                 }
+            } else {
+                cout << "Cell already filled.\n";
             }
         } else {
             cout << "Invalid input. Try again.\n";
@@ -131,11 +135,15 @@ void playSudoku(int board[SIZE][SIZE]) {
     if (isBoardFull(board)) {
         cout << "Congratulations! You've completed the Sudoku!\n";
     }
+
+    cout << "\nSolution Board:\n";
+    displayBoard(solutionBoard);
 }
 
 int main() {
     int ep;
     int board[SIZE][SIZE] = {0};
+    int solutionBoard[SIZE][SIZE] = {0};
     int visibleNumbers;
     srand(time(0));
 
@@ -149,40 +157,41 @@ int main() {
     cin >> ep;
     
     while (ep < 0 || ep > 3) {
-        cout << "Invalid input.Please enter a number between 0 and 3.(0 for exit)";
+        cout << "Invalid input. Please enter a number between 0 and 3 (0 for exit): ";
         showDifficultyMenu();
         cin >> ep;
     }
 
     if (ep == 1) 
-		visibleNumbers = 36;
+        visibleNumbers = 36;
     else if (ep == 2) 
-		visibleNumbers = 32;
-    else if (ep ==3) 
-		visibleNumbers = 26;
-	else{
-    	auto end = steady_clock::now();
-    	auto duration = duration_cast<seconds>(end - start).count();
-    	cout << "You exited the game.\n";
-		cout << "Time taken: " << duration << " seconds.\n";
-		return 0;
-	}
+        visibleNumbers = 32;
+    else if (ep == 3) 
+        visibleNumbers = 26;
+    else {
+        auto end = steady_clock::now();
+        auto duration = duration_cast<seconds>(end - start).count();
+        cout << "You exited the game.\n";
+        cout << "Time taken: " << duration << " seconds.\n";
+        return 0;
+    }
+
     fillSudoku(board);
+    copy(&board[0][0], &board[0][0] + SIZE * SIZE, &solutionBoard[0][0]); // Save full solution
     removeNumbers(board, visibleNumbers);
 
     switch (ep) {
         case 1: cout << "\tEasy level.\n"; break;
         case 2: cout << "\tMedium level.\n"; break;
         case 3: cout << "\tHard level.\n"; break;
-        default: cout << "\tYou didn't choose correctly.\n"; break;
     }
 
     displayBoard(board);
-
-    // Ενεργοποιημένη συνάρτηση για προσπάθειες χρήστη
-    //checkInput(board);
-    playSudoku(board);
-
-
+    playSudoku(board, solutionBoard);
+    
+    auto end = steady_clock::now();
+    auto duration = duration_cast<seconds>(end - start).count();
+    cout << "\nTime taken: " << duration << " seconds.\n";
     return 0;
 }
+
