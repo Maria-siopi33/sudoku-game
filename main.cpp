@@ -7,9 +7,13 @@
 #include <chrono>
 
 using namespace std;
+<<<<<<< Updated upstream
 
 const int SIZE = 9;
 
+=======
+const int SIZE = 9;
+>>>>>>> Stashed changes
 void showDifficultyMenu() {
     cout << "\nChoose difficulty:\n";
     cout << "1. Easy\n";
@@ -19,11 +23,19 @@ void showDifficultyMenu() {
     cout << "Your choice: ";
 }
 
+<<<<<<< Updated upstream
 void displayBoard(int board[SIZE][SIZE]) {
     cout << "\n    1 2 3   4 5 6   7 8 9 \n";
     cout << " ---------------------------\n";
     for (int i = 0; i < SIZE; i++) {
         if (i % 3 == 0 && i != 0)
+=======
+void displayBoard(int board[SIZE][SIZE], int chances = -1) {
+    cout << "\n    1 2 3   4 5 6   7 8 9 \n";//deiktes gia pio eykoly epilogh
+    cout << " ---------------------------\n";
+    for (int i = 0; i < SIZE; i++) {
+        if (i % 3 == 0 && i != 0) 
+>>>>>>> Stashed changes
             cout << " ---------------------------\n";
         cout << i + 1 << " | ";
         for (int j = 0; j < SIZE; j++) {
@@ -35,11 +47,22 @@ void displayBoard(int board[SIZE][SIZE]) {
                 cout << board[i][j] << " ";
         }
         cout << "\n";
+<<<<<<< Updated upstream
+=======
+    }
+    cout << " ---------------------------\n";
+    if (chances >= 0) {
+        cout << "Remaining chances: " << chances << "/3\n";// na emfanizontai oi eykairies poy soy menoyn
+>>>>>>> Stashed changes
     }
     cout << " ---------------------------\n";
 }
 
+<<<<<<< Updated upstream
 bool isSafe(int board[SIZE][SIZE], int row, int col, int num) {
+=======
+bool isSafe(int board[SIZE][SIZE], int row, int col, int num) { // elegxoi eisagvghs 
+>>>>>>> Stashed changes
     for (int x = 0; x < SIZE; x++) {
         if (board[row][x] == num || board[x][col] == num)
             return false;
@@ -56,7 +79,11 @@ bool isSafe(int board[SIZE][SIZE], int row, int col, int num) {
     return true;
 }
 
+<<<<<<< Updated upstream
 bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) {
+=======
+bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) { //periexei lymeno ton pinaka sudoku
+>>>>>>> Stashed changes
     if (row == SIZE - 1 && col == SIZE) return true;
     if (col == SIZE) {
         row++;
@@ -75,7 +102,11 @@ bool fillSudoku(int board[SIZE][SIZE], int row = 0, int col = 0) {
     return false;
 }
 
+<<<<<<< Updated upstream
 void removeNumbers(int board[SIZE][SIZE], int count) {
+=======
+void removeNumbers(int board[SIZE][SIZE], int count) { //bgazei analoga me to epipedo dyskolias mia posothta arithmvn
+>>>>>>> Stashed changes
     vector<pair<int, int>> positions;
     for (int i = 0; i < SIZE; i++)
         for (int j = 0; j < SIZE; j++)
@@ -91,7 +122,11 @@ void removeNumbers(int board[SIZE][SIZE], int count) {
     }
 }
 
+<<<<<<< Updated upstream
 bool isBoardFull(int board[SIZE][SIZE]) {
+=======
+bool isBoardFull(int board[SIZE][SIZE]) { //elexos an exei lythei to sudoku
+>>>>>>> Stashed changes
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
             if (board[i][j] == 0)
@@ -103,6 +138,7 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     int row, col, num;
     int chances = 3;
 
+<<<<<<< Updated upstream
     while (!isBoardFull(board)) {
         cout << "\nEnter row (1-9), column (1-9), and number (1-9): ";
         cin >> row >> col >> num;
@@ -195,3 +231,98 @@ int main() {
     return 0;
 }
 
+=======
+    displayBoard(board, chances);
+
+    while (!isBoardFull(board)) { 
+        cout << "\nEnter row (1-9), column (1-9), and number (1-9): "; //eisagvgi mesa se synartisi
+        cin >> row >> col >> num;
+
+        row--; 
+        col--;
+
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
+            if (board[row][col] == 0) {
+                if (solutionBoard[row][col] == num) {
+                    board[row][col] = num;
+                    displayBoard(board, chances);
+                } else {
+                    cout << "Wrong number! That’s not the correct value for this cell.\n";
+                    chances--;
+                    if (chances == 0) {
+                        cout << "No more chances. Game over.\n";
+                        break;
+                    }
+                    displayBoard(board, chances);
+                }
+            } else {
+                cout << "Cell already filled.\n";
+            }
+        } else {
+            cout << "Invalid input. Try again.\n";
+        }
+    }
+
+    if (isBoardFull(board)) {
+        cout << "Congratulations! You've completed the Sudoku!\n";
+    }
+
+    cout << "\nSolution Board:\n"; //deixnv lysh sudoku
+    displayBoard(solutionBoard);
+}
+
+int main() {
+    int ep;
+    int board[SIZE][SIZE] = {0};
+    int solutionBoard[SIZE][SIZE] = {0};
+    int visibleNumbers;
+    srand(time(0));
+
+    using namespace std::chrono;
+    auto start = steady_clock::now();
+
+    cout << "==============================\n";
+    cout << " \tWelcome to Sudoku!\n";
+    cout << "==============================\n";
+    showDifficultyMenu();
+    cin >> ep;
+ 
+    while (ep < 0 || ep > 3) { //elexos epiloghs
+        cout << "Invalid input. Please enter a number between 0 and 3 (0 for exit): ";
+        showDifficultyMenu();
+        cin >> ep;
+    }
+
+    if (ep == 1)
+        visibleNumbers = 36;
+    else if (ep == 2)
+        visibleNumbers = 32;
+    else if (ep == 3)
+        visibleNumbers = 26;
+    else {
+        auto end = steady_clock::now();
+        auto duration = duration_cast<seconds>(end - start).count();
+        cout << "You exited the game.\n";
+        cout << "Time taken: " << duration << " seconds.\n";
+        return 0;
+    }
+
+    fillSudoku(board);
+    copy(&board[0][0], &board[0][0] + SIZE * SIZE, &solutionBoard[0][0]); // Save full solution
+    removeNumbers(board, visibleNumbers);
+
+    switch (ep) {
+        case 1: cout << "\tEasy level.\n"; break;
+        case 2: cout << "\tMedium level.\n"; break;
+        case 3: cout << "\tHard level.\n"; break;
+    }
+
+    playSudoku(board, solutionBoard);
+
+    auto end = steady_clock::now(); //synartisi gia xrono
+    auto duration = duration_cast<seconds>(end - start).count();
+    cout << "\nTime taken: " << duration << " seconds.\n";
+    return 0;
+}
+
+>>>>>>> Stashed changes
