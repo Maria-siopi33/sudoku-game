@@ -5,21 +5,56 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <sstream>
 
 using namespace std;
 
 const int SIZE = 9;
 
 void showDifficultyMenu() {
-    cout << "\nChoose difficulty:\n";
-    cout << "1. Easy\n";
-    cout << "2. Medium\n";
-    cout << "3. Hard\n";
+    cout << "Choose difficulty:\n";
+    cout << "1. Easy \n";
+    cout << "2. Medium \n";
+    cout << "3. Hard \n";
     cout << "0. Exit\n";
-    cout << "Your choice: ";
 }
 
-void displayBoard(int board[SIZE][SIZE],int chances = -1) {
+void giveHint(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) { //dinei ena tyxaio hint 
+    vector<pair<int, int>> emptyCells;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (board[i][j] == 0) {
+                emptyCells.push_back({i, j});
+            }
+        }
+    }
+
+    if (!emptyCells.empty()) {
+        auto hintCell = emptyCells[rand() % emptyCells.size()];
+        int row = hintCell.first;
+        int col = hintCell.second;
+        cout << "Hint: Try placing a " << solutionBoard[row][col]
+             << " at row " << row + 1 << ", column " << col + 1 << ".\n";
+    } else {
+        cout << "No hints available. Board is full.\n";
+    }
+}
+
+void autoFillOneCell(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) { //dinei pragmatikh voitheia
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (board[i][j] == 0) {
+                board[i][j] = solutionBoard[i][j];
+                cout << "Auto-filled cell at row " << i + 1 << ", column " << j + 1
+                     << " with value " << solutionBoard[i][j] << ".\n";
+                return;
+            }
+        }
+    }
+    cout << "Board is already full.\n";
+}
+
+void displayBoard(int board[SIZE][SIZE], int chances = -1,int hintsLeft = -1) {
     cout << "\n    1 2 3   4 5 6   7 8 9 \n";
     cout << " ---------------------------\n";
     for (int i = 0; i < SIZE; i++) {
@@ -37,12 +72,15 @@ void displayBoard(int board[SIZE][SIZE],int chances = -1) {
         cout << "\n";
     }
     cout << " ---------------------------\n";
-     if (chances >= 0) {
+    if (chances >= 0) {
         cout << "Remaining chances: " << chances << "/3\n";
     }
-
+     if (hintsLeft >= 0) {
+        cout << "Remaining hints: " << hintsLeft << "/2\n";
+    }
+    cout << " ---------------------------\n";
 }
-
+  
 
 bool isSafe(int board[SIZE][SIZE], int row, int col, int num) {
     for (int x = 0; x < SIZE; x++) {
@@ -104,56 +142,64 @@ bool isBoardFull(int board[SIZE][SIZE]) {
     return true;
 }
 
-
-bool giveHelp(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
-            if (board[i][j] == 0) {
-                board[i][j] = solutionBoard[i][j];
-                cout << "Help used: Cell (" << i+1 << "," << j+1 << ") filled with " << solutionBoard[i][j] << ".\n";
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
-    int row, col, num;
     int chances = 3;
-    
-     displayBoard(board, chances);
+    int hintsLeft = 2;
+
+    displayBoard(board, chances, hintsLeft);
 
     while (!isBoardFull(board)) {
-        cout << "\nEnter row (1-9), column (1-9), and number (1-9): ";
-        cin >> row >> col >> num;
+        cout << "\nEnter 'h' for hint, 'a' for auto-fill, or 'row col num': ";
+        string inputLine;
+        getline(cin >> ws, inputLine);
 
-        row--; 
-        col--;
+        if (inputLine == "h") {
+            if (hintsLeft > 0) {
+                giveHint(board, solutionBoard);
+                hintsLeft--;
+            } else {
+                cout << "No hints left.\n";
+            }
+            displayBoard(board, chances, hintsLeft);
+            continue;
+        } else if (inputLine == "a") {
+            if (hintsLeft > 0) {
+                autoFillOneCell(board, solutionBoard);
+                hintsLeft--;
+            } else {
+                cout << "No auto-fills left.\n";
+            }
+            displayBoard(board, chances, hintsLeft);
+            continue;
+        }
 
-        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
-            if (board[row][col] == 0) {
-                if (solutionBoard[row][col] == num) {
-                    board[row][col] = num;
-                    displayBoard(board);
-                } else {
-                    cout << "Wrong number! hat’s not the correct value for this cell.\n";
-                    chances--;
-                    cout << "Remaining chances: " << chances << "/3\n";
-                      displayBoard(board,chances);
-                    if (chances == 0) {
-                        cout << "No more chances. Game over.\n";
-                        break;
+        int row, col, num;
+        stringstream ss(inputLine);
+        if (ss >> row >> col >> num) {
+            row--; col--;
+
+            if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
+                if (board[row][col] == 0) {
+                    if (solutionBoard[row][col] == num) {
+                        board[row][col] = num;
+                        displayBoard(board, chances, hintsLeft);
+                    } else {
+                        cout << "Wrong number! That’s not the correct value for this cell.\n";
+                        chances--;
+                        if (chances == 0) {
+                            cout << "No more chances. Game over.\n";
+                            break;
+                        }
+                        displayBoard(board, chances, hintsLeft);
                     }
+                } else {
+                    cout << "Cell already filled.\n";
                 }
-                
-                
-            } 
-			else {
-                cout << "Cell already filled.\n";
+            } else {
+                cout << "Invalid input range. Try again.\n";
             }
         } else {
-            cout << "Invalid input. Try again.\n";
+            cout << "Invalid input format. Try again.\n";
         }
     }
 
@@ -165,7 +211,8 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     displayBoard(solutionBoard);
 }
 
- int main() {
+
+int main() {
     int ep;
     int board[SIZE][SIZE] = {0};
     int solutionBoard[SIZE][SIZE] = {0};
@@ -180,20 +227,14 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     cout << "==============================\n";
     showDifficultyMenu();
     cin >> ep;
-    
+
     while (ep < 0 || ep > 3) {
         cout << "Invalid input. Please enter a number between 0 and 3 (0 for exit): ";
         showDifficultyMenu();
         cin >> ep;
     }
 
-    if (ep == 1) 
-        visibleNumbers = 36;
-    else if (ep == 2) 
-        visibleNumbers = 32;
-    else if (ep == 3) 
-        visibleNumbers = 26;
-    else {
+    if (ep == 0) {
         auto end = steady_clock::now();
         auto duration = duration_cast<seconds>(end - start).count();
         cout << "You exited the game.\n";
@@ -201,8 +242,9 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
         return 0;
     }
 
+    visibleNumbers = (ep == 1) ? 36 : (ep == 2) ? 32 : 26;
     fillSudoku(board);
-    copy(&board[0][0], &board[0][0] + SIZE * SIZE, &solutionBoard[0][0]); // Save full solution
+    copy(&board[0][0], &board[0][0] + SIZE * SIZE, &solutionBoard[0][0]);
     removeNumbers(board, visibleNumbers);
 
     switch (ep) {
@@ -211,11 +253,19 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
         case 3: cout << "\tHard level.\n"; break;
     }
 
-    
     playSudoku(board, solutionBoard);
-    
+
     auto end = steady_clock::now();
     auto duration = duration_cast<seconds>(end - start).count();
-    cout << "\nTime taken: " << duration << " seconds.\n";
+
+    if (duration < 60) {
+        cout << "\nTime taken: " << duration << " seconds.\n";
+    } else {
+        int minutes = duration / 60;
+        int seconds = duration % 60;
+        cout << "\nTime taken: " << minutes << " minutes and " << seconds << " seconds.\n";
+    }
+
     return 0;
 }
+
