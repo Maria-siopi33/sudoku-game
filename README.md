@@ -1,2 +1,1 @@
-# sudoku-game
-code for project
+ERGASIA SUDOKU GAME 
