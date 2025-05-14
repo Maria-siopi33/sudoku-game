@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <chrono>
 //lol
+//lol
 using namespace std;
 int C = 0;
 const int SIZE = 9;
@@ -126,6 +127,8 @@ bool giveHelp(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     return false;
 }
 
+
+
 void GamePoints(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE], int row, int col, int num){
     if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
         if (board[row][col] == 0) {
@@ -140,6 +143,32 @@ void GamePoints(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE], int row, i
     }
 }
 
+bool Tries(int& chances) {
+    if (C < 1) {
+        cout << "Sorry, you don't have enough points to buy more chances.\n";
+        return false;
+    }
+
+    char an;
+    do {
+        cout << "Would you like to buy 3 more chances for 1 point? (y/n): ";
+        cin >> an;
+        an = tolower(an);
+        if (an != 'y' && an != 'n') {
+            cout << "Invalid input. Please type 'y' or 'n'.\n";
+        }
+    } while (an != 'y' && an != 'n');
+
+    if (an == 'y') {
+        chances += 3;
+        C -= 1;
+        cout << "You just bought 3 more chances. Remaining points: " << C << "\n";
+        return true;
+    } else {
+        cout << "You chose not to buy more chances.\n";
+        return false;
+    }
+}
 
 
 void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
@@ -173,8 +202,10 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     				cout << "Mistakes:" << mistakes << "/3\n";
     				displayBoard(board, mistakes);
     				if (mistakes == 3) {
-    					cout << "No more chances. Game over.\n";
-    					break;
+    					bool bought = Tries(mistakes);
+    					cout << "Remaining chances: " << mistakes << "/3\n";
+						displayBoard(board, mistakes);
+						if (!bought) { break;}
 					}
 				}
 			} 
