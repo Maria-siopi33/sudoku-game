@@ -5,8 +5,6 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
-#include <cctype>
-#include <iomanip>
 //lol
 //lol
 using namespace std;
@@ -136,24 +134,24 @@ void GamePoints(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE], int row, i
         if (board[row][col] == 0) {
             if (solutionBoard[row][col] == num) {
                 C += 2;
-                cout << "You won two points with your correct answer. Total points: " << C << "\n";
+                cout << "You won two points with your correct answer. Total amount: " << C << "\n";
             } else {
                 C -= 2;
-                cout << "You lost two points with your wrong answer. Total points: " << C << "\n";
+                cout << "You lost two points with your wrong answer. Total amount: " << C << "\n";
             }
         }
     }
 }
 
 bool Tries(int& chances) {
-    if (C < 5) {
+    if (C < 1) {
         cout << "Sorry, you don't have enough points to buy more chances.\n";
         return false;
     }
 
     char an;
     do {
-        cout << "Would you like to buy 3 more chances for 5 point? (y/n): ";
+        cout << "Would you like to buy 3 more chances for 1 point? (y/n): ";
         cin >> an;
         an = tolower(an);
         if (an != 'y' && an != 'n') {
@@ -162,8 +160,8 @@ bool Tries(int& chances) {
     } while (an != 'y' && an != 'n');
 
     if (an == 'y') {
-        chances =0;
-        C -= 5;
+        chances += 3;
+        C -= 1;
         cout << "You just bought 3 more chances. Remaining points: " << C << "\n";
         return true;
     } else {
@@ -241,15 +239,6 @@ void LevelPoints(int l){
 	}
 }
 
-void displayTime(int duration) {
-    int minutes = duration / 60;
-    int seconds = duration % 60;
-
-   if (minutes<1)
-		cout << "Time taken:" << seconds << " seconds.\n";//emfanisi tou xronoy se morfi mm:ss
-	else
-		cout << "Time taken:" << minutes << ":" << seconds << " minutes.\n";//emfanisi tou xronoy se morfi mm:ss	
-	}
 
  int main() {
     int ep;
@@ -264,18 +253,7 @@ void displayTime(int duration) {
     cout << "==============================\n";
     cout << " \tWelcome to Sudoku!\n";
     cout << "==============================\n";
-    char ans;
-    cout << "Do you want to see the instructions?(y/n): ";//rctaei gia emfanisi odigion
-    cin >> ans;
-    ans=tolower(ans);
-    while(ans!='y' && ans!='n'){
-    	cout<<"Wrong input.Enter again(y/n):";
-    	cin >> ans;
-    	ans=tolower(ans);
-	}
-    if (ans == 'y') {
-        instructions();
-    }
+    instructions();
     showDifficultyMenu();
     cin >> ep;
    
@@ -298,7 +276,10 @@ void displayTime(int duration) {
 		int minutes = duration / 60;
 		int seconds = duration % 60;
 		cout << "You exited the game.\n";
-		displayTime(duration);
+		if (minutes<1)
+			cout << "Time taken:" << seconds << " seconds.\n";//emfanisi tou xronoy se morfi mm:ss
+		else
+			cout << "Time taken:" << minutes << ":" << seconds << " minutes.\n";//emfanisi tou xronoy se morfi mm:ss	
 		return 0;
     }
     
@@ -323,7 +304,10 @@ void displayTime(int duration) {
 	int minutes = duration / 60;
 	int seconds = duration % 60;
 
-	displayTime(duration);
+	if (minutes < 1)
+    	cout << "Time taken: " << seconds << " seconds.\n";
+	else
+   		cout << "Time taken: " << minutes << ":" << seconds << " minutes.\n";
 
 	cout << "Your total points are: " << C << "\n";
     return 0;
