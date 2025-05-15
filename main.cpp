@@ -5,6 +5,9 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <cctype>
+#include <iomanip>
+//lol
 //lol
 using namespace std;
 int C = 0;
@@ -126,20 +129,48 @@ bool giveHelp(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     return false;
 }
 
+
+
 void GamePoints(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE], int row, int col, int num){
     if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && num >= 1 && num <= 9) {
         if (board[row][col] == 0) {
             if (solutionBoard[row][col] == num) {
                 C += 2;
-                cout << "You won two points with your correct answer. Total amount: " << C << "\n";
+                cout << "You won two points with your correct answer. Total points: " << C << "\n";
             } else {
                 C -= 2;
-                cout << "You lost two points with your wrong answer. Total amount: " << C << "\n";
+                cout << "You lost two points with your wrong answer. Total points: " << C << "\n";
             }
         }
     }
 }
 
+bool Tries(int& chances) {
+    if (C < 5) {
+        cout << "Sorry, you don't have enough points to buy more chances.\n";
+        return false;
+    }
+
+    char an;
+    do {
+        cout << "Would you like to buy 3 more chances for 5 point? (y/n): ";
+        cin >> an;
+        an = tolower(an);
+        if (an != 'y' && an != 'n') {
+            cout << "Invalid input. Please type 'y' or 'n'.\n";
+        }
+    } while (an != 'y' && an != 'n');
+
+    if (an == 'y') {
+        chances =0;
+        C -= 5;
+        cout << "You just bought 3 more chances. Remaining points: " << C << "\n";
+        return true;
+    } else {
+        cout << "You chose not to buy more chances.\n";
+        return false;
+    }
+}
 
 
 void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
@@ -173,8 +204,10 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     				cout << "Mistakes:" << mistakes << "/3\n";
     				displayBoard(board, mistakes);
     				if (mistakes == 3) {
-    					cout << "No more chances. Game over.\n";
-    					break;
+    					bool bought = Tries(mistakes);
+    					cout << "Remaining chances: " << mistakes << "/3\n";
+						displayBoard(board, mistakes);
+						if (!bought) { break;}
 					}
 				}
 			} 
@@ -208,6 +241,15 @@ void LevelPoints(int l){
 	}
 }
 
+void displayTime(int duration) {
+    int minutes = duration / 60;
+    int seconds = duration % 60;
+
+   if (minutes<1)
+		cout << "Time taken:" << seconds << " seconds.\n";//emfanisi tou xronoy se morfi mm:ss
+	else
+		cout << "Time taken:" << minutes << ":" << seconds << " minutes.\n";//emfanisi tou xronoy se morfi mm:ss	
+	}
 
  int main() {
     int ep;
@@ -222,7 +264,18 @@ void LevelPoints(int l){
     cout << "==============================\n";
     cout << " \tWelcome to Sudoku!\n";
     cout << "==============================\n";
-    instructions();
+    char ans;
+    cout << "Do you want to see the instructions?(y/n): ";//rctaei gia emfanisi odigion
+    cin >> ans;
+    ans=tolower(ans);
+    while(ans!='y' && ans!='n'){
+    	cout<<"Wrong input.Enter again(y/n):";
+    	cin >> ans;
+    	ans=tolower(ans);
+	}
+    if (ans == 'y') {
+        instructions();
+    }
     showDifficultyMenu();
     cin >> ep;
    
@@ -245,10 +298,7 @@ void LevelPoints(int l){
 		int minutes = duration / 60;
 		int seconds = duration % 60;
 		cout << "You exited the game.\n";
-		if (minutes<1)
-			cout << "Time taken:" << seconds << " seconds.\n";//emfanisi tou xronoy se morfi mm:ss
-		else
-			cout << "Time taken:" << minutes << ":" << seconds << " minutes.\n";//emfanisi tou xronoy se morfi mm:ss	
+		displayTime(duration);
 		return 0;
     }
     
@@ -273,10 +323,7 @@ void LevelPoints(int l){
 	int minutes = duration / 60;
 	int seconds = duration % 60;
 
-	if (minutes < 1)
-    	cout << "Time taken: " << seconds << " seconds.\n";
-	else
-   		cout << "Time taken: " << minutes << ":" << seconds << " minutes.\n";
+	displayTime(duration);
 
 	cout << "Your total points are: " << C << "\n";
     return 0;
