@@ -7,19 +7,29 @@
 #include <chrono>
 #include <cctype>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
 int C = 0;
 const int SIZE = 9;
 
 void instructions(){
-	cout<<"Accordingly to the level of difficulty you will choose, we offer you some points to purchase a help if you need it.\n";
+	cout<<"According to the difficulty level you will choose,you will start with some points:\n";
 	cout<<"Levels:\n";
-	cout << "1. Easy: 10 points\n";
-    cout << "2. Medium: 20 points\n";
-    cout << "3. Hard: 30 points\n";
-    cout<<"With every number you find you win 2 additional points. \n";
-    cout<<"With every mistake you do you lose 2 points from your total. \n";
+	cout << "1. Easy   - 10 points\n";
+    cout << "2. Medium - 20 points\n";
+    cout << "3. Hard   - 30 points\n\n";
+    cout << "- Fill the grid so that each number from 1 to 9\n";
+    cout << "    appears exactly once in every row, column, and 3x3 box.\n";
+    cout << "- To enter a number, type: row column value (e.g. 3 4 7).\n";
+    cout << "- You can use 'h' to reveal a correct value (for free).\n";
+    cout << "- You can use 'a' to fill in all obvious values (for free).\n";
+    cout << "- If you run out of attempts, you can buy 3 extra attempts for 5 points.\n";
+    cout << "- You can exit the game whenever you want.\n";
+    
+    cout << "Scoring:\n";
+	cout << "- You gain 2 points for every correct number you enter.\n";
+	cout << "- You lose 2 points for every incorrect number.\n";
 }
 
 void showDifficultyMenu() {
@@ -172,10 +182,8 @@ void GamePoints(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE], int row, i
         if (board[row][col] == 0) {
             if (solutionBoard[row][col] == num) {
                 C += 2;
-                cout << "You won two points with your correct answer. Total points: " << C << "\n";
             } else {
                 C -= 2;
-                cout << "You lost two points with your wrong answer. Total points: " << C << "\n";
             }
         }
     }
@@ -207,81 +215,47 @@ bool Tries(int& chances) {
         return false;
     }
 }
-/*cout << "\nEnter row (1-9), column (1-9), and number (1-9), or type 'h' for hint, 'a' for auto-fill, or '0 0 0' to exit: ";
-string input;
-cin >> ws;
-getline(cin, input);
-
-if (input == "h") {
-    if (hintsLeft > 0) {
-        giveHint(board, solutionBoard);
-        hintsLeft--;
-    } else {
-        cout << "No hints left.\n";
-    }
-    displayBoard(board, mistakes, hintsLeft);
-    continue;
-}
-else if (input == "a") {
-    if (hintsLeft > 0) {
-        autoFillOneCell(board, solutionBoard);
-        hintsLeft--;
-    } else {
-        cout << "No auto-fills left.\n";
-    }
-    displayBoard(board, mistakes, hintsLeft);
-    continue;
-}
-else {
-    // Διάβασε κανονικά τις 3 τιμές
-    istringstream iss(input);
-    if (!(iss >> row >> col >> num)) {
-        cout << "Invalid input. Please enter either 'h', 'a', or 3 numbers.\n";
-        continue;
-    }
-}*/
-
 
 void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     int row, col, num;
     int mistakes=0,hintsLeft=2;
-    using namespace std::chrono;
-    auto lastActionTime = steady_clock::now();
     
     displayBoard(board, mistakes,hintsLeft);
 
     while (!isBoardFull(board)) {
-    	auto now = steady_clock::now();
-        auto secondsPassed = duration_cast<seconds>(now - lastActionTime).count();
-        if (secondsPassed >= 30){
-        	cout << "Would you like a hint (h), auto-fill (a), or continue (c)? ";
-        	string inputLine;
-        	getline(cin >> ws, inputLine);
+    	
+	cout << "\nEnter row (1-9), column (1-9), and number (1-9), or type 'h' for hint, 'a' for auto-fill, or '0 0 0' to exit: ";
+	string input;
+	cin >> ws;
+	getline(cin, input);
 
-        	if (inputLine == "h") {
-            	if (hintsLeft > 0) {
-                	giveHint(board, solutionBoard);
-                	hintsLeft--;
-           		} else {
-                	cout << "No hints left.\n";
-            	}
-            	displayBoard(board, mistakes, hintsLeft);
-            	continue;
-        	} else if (inputLine == "a") {
-            	if (hintsLeft > 0) {
-                	autoFillOneCell(board, solutionBoard);
-                	hintsLeft--;
-            	} else {
-                	cout << "No auto-fills left.\n";
-            	}
-            	displayBoard(board, mistakes, hintsLeft);
-            	continue;
-        	}
+	if (input == "h") {
+    	if (hintsLeft > 0) {
+       		giveHint(board, solutionBoard);
+        	hintsLeft--;
+    	} else {
+        	cout << "No hints left.\n";
+    	}
+    	displayBoard(board, mistakes, hintsLeft);
+    	continue;
 		}
-        cout << "\nEnter row (1-9), column (1-9), and number (1-9),[Enter 0 0 0 for exit]: ";
-        cin >> row >> col >> num;
-        lastActionTime = steady_clock::now();
-
+	else if (input == "a") {
+    	if (hintsLeft > 0) {
+        	autoFillOneCell(board, solutionBoard);
+        	hintsLeft--;
+    	} else {
+        	cout << "No auto-fills left.\n";
+    	}
+    	displayBoard(board, mistakes, hintsLeft);
+    	continue;
+	}
+	else {
+    	istringstream iss(input);
+    	if (!(iss >> row >> col >> num)) {
+        	cout << "Invalid input. Please enter either 'h', 'a', or 3 numbers.\n";
+        	continue;
+    	}
+	}
         
         if (row == 0 && col == 0 && num == 0) {
     		cout << "You exited the game.\n";
@@ -325,96 +299,6 @@ void playSudoku(int board[SIZE][SIZE], int solutionBoard[SIZE][SIZE]) {
     	cout << "\nSolution Board:\n";
     	displayBoard(solutionBoard,mistakes,hintsLeft);
 }
-/*
-void playSudoku(vector<vector<int>>& board, const vector<vector<int>>& solutionBoard) {
-    int mistakes = 0;
-    int hintsLeft = 3;
-    int lives = 3;
-    int score = 100;
-    auto startTime = chrono::steady_clock::now();
-
-    while (true) {
-        displayBoard(board, mistakes, hintsLeft);
-
-        // Check for win
-        if (board == solutionBoard) {
-            auto endTime = chrono::steady_clock::now();
-            auto duration = chrono::duration_cast<chrono::seconds>(endTime - startTime).count();
-            cout << "Congratulations! You solved the puzzle.\n";
-            cout << "Time taken: " << duration << " seconds\n";
-            cout << "Final score: " << score << "\n";
-            break;
-        }
-
-        cout << "\nEnter row (1-9), column (1-9), and number (1-9),\n"
-             << "or type 'h' for hint, 'a' for auto-fill, or '0 0 0' to exit: ";
-
-        string input;
-        getline(cin >> ws, input);
-
-        // Handle hint
-        if (input == "h") {
-            if (hintsLeft > 0) {
-                giveHint(board, solutionBoard);
-                hintsLeft--;
-            } else {
-                cout << "No hints left.\n";
-            }
-            continue;
-        }
-
-        // Handle auto-fill
-        if (input == "a") {
-            if (hintsLeft > 0) {
-                autoFillOneCell(board, solutionBoard);
-                hintsLeft--;
-            } else {
-                cout << "No auto-fills left.\n";
-            }
-            continue;
-        }
-
-        // Handle number input
-        istringstream iss(input);
-        int row, col, num;
-        if (!(iss >> row >> col >> num)) {
-            cout << "Invalid input. Please enter either 'h', 'a', or 3 numbers separated by spaces.\n";
-            continue;
-        }
-
-        if (row == 0 && col == 0 && num == 0) {
-            cout << "Exiting game.\n";
-            break;
-        }
-
-        if (row < 1 || row > 9 || col < 1 || col > 9 || num < 1 || num > 9) {
-            cout << "Invalid input. Numbers must be between 1 and 9.\n";
-            continue;
-        }
-
-        row--; col--;
-
-        if (board[row][col] != 0) {
-            cout << "Cell already filled. Choose another.\n";
-            continue;
-        }
-
-        if (solutionBoard[row][col] == num) {
-            board[row][col] = num;
-            score += 10;
-        } else {
-            cout << "Incorrect number.\n";
-            mistakes++;
-            lives--;
-            score -= 5;
-            if (lives == 0) {
-                cout << "Game over. You've made too many mistakes.\n";
-                break;
-            }
-        }
-    }
-}*/
-
 
 void LevelPoints(int l){
 	if (l==1){
@@ -436,6 +320,7 @@ void displayTime(int duration) {
          << setw(2) << setfill('0') << minutes << ":"
          << setw(2) << setfill('0') << seconds << "\n";
 }
+
  int main() {
     int ep;
     int board[SIZE][SIZE] = {0};
@@ -472,11 +357,11 @@ void displayTime(int duration) {
 
     LevelPoints(ep);
     if (ep == 1) 
-        visibleNumbers = 36;
+        visibleNumbers = 39;
     else if (ep == 2) 
-        visibleNumbers = 32;
+        visibleNumbers = 35;
     else if (ep == 3) 
-        visibleNumbers = 26;
+        visibleNumbers = 29;
     else {
         auto end = steady_clock::now();
 		auto duration = duration_cast<seconds>(end - start).count();
@@ -510,4 +395,4 @@ void displayTime(int duration) {
 
 	cout << "Your total points are: " << C << "\n";
     return 0;
-} //δε λειτουργει
+}
