@@ -121,6 +121,14 @@ These features combine the logical essence of Sudoku with strategic elements lik
   <img src="telos paixnidiou.png" alt="Sudoku Game Completed" width="400px">
 </p>
 
+💻 Technologies Used
+Language: C++
+
+Libraries: Standard C++ library (vector, iostream, cstdlib, etc.)
+
+Tool: LaTeX Beamer for presentation.
+
+
 - **Future extensions of the project:**
   - Development of a graphical user interface (GUI).
   - Addition of game-saving and resume functionality.
