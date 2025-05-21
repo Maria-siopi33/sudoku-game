@@ -121,4 +121,26 @@ These features combine the logical essence of Sudoku with strategic elements lik
   <img src="telos paixnidiou.png" alt="Sudoku Game Completed" width="400px">
 </p>
 
+- **Future extensions of the project:**
+  - Development of a graphical user interface (GUI).
+  - Addition of game-saving and resume functionality.
+  - Support for multiple players with a leaderboard system.
+  - Inclusion of a time limit or additional challenges (e.g., no hints allowed).
+
+## 🎮 Demo Video
+
+You can watch a full demonstration of the Sudoku game here:  
+👉 [Click here to view the demo on Dropbox](https://www.dropbox.com/scl/fo/bfllfqgtvtanho4yyidyf/AEyplU1sXJVaLEChBEWjLls?rlkey=su9bmwsy5ib6wkyfa8eo0xzx1&st=7048rjel&dl=0)
+
+The demo includes the following:
+
+1. Video showing the main menu
+2. Difficulty level selection: *Easy*, *Medium*, *Hard*
+3. Use of the *Hint* function
+4. Use of the *Auto-fill* function
+5. Handling *mistakes* (with enough points to buy extra chances)
+6. Handling *mistakes* (without enough points)
+7. Exiting the game
+
+
 
