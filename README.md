@@ -73,8 +73,9 @@ These features combine the logical essence of Sudoku with strategic elements lik
 
 ### 🧠 Medium Difficulty
 <p align="center">
-  <img src="medium.png" alt="Sudoku Medium Difficulty" width="400px">
+  <img src="medium.png" alt="Sudoku Medium Difficulty" width="400px" height="auto">
 </p>
+
 
 
 
