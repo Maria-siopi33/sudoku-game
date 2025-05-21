@@ -4,35 +4,65 @@
 <p align="center">
   <img src="https://img.shields.io/badge/language-C++-brightgreen" />
 </p>
-# Sudoku Game 🧩
 
+
+# 🧩 Sudoku Game
 ## What is Sudoku?
 
 Sudoku is a logic-based number puzzle. The player's goal is to fill a 9x9 grid with numbers from 1 to 9 so that:  
-- each row,  
-- each column,  
-- and each of the nine 3x3 subgrids  
+- Each row  
+- Each column  
+- And each of the nine 3x3 subgrids  
 
 contain all the numbers from 1 to 9 without any repetition.
 
 ---
 
-## Features Included ✨
+## 🧩 Console Sudoku Game (C++)
 
-The Sudoku application we developed includes the following features:
+This is a **console-based Sudoku game implemented in C++**.  
+It offers a user-friendly experience with difficulty levels, a scoring system, and limited hint/auto-fill options to make the game more strategic and engaging.
 
-- **Difficulty level selection** (Easy, Medium, Hard), which affects the number of pre-filled cells.  
-- **Dynamic generation of a valid Sudoku puzzle** along with simultaneous storage of its solution.  
-- **Interactive user input** allowing placement of numbers in empty cells.  
-- **Move correctness checking** with corresponding score updates:  
-  - Each correct answer adds **2 points** ✅  
-  - Each incorrect answer subtracts **2 points** and increases the error count ❌  
-- Ability to "**purchase**" hints to fill in a cell using points 💡  
-- Ability to "**purchase**" additional attempts if the user exhausts the initial 3 attempts 🔄  
-- Display of the **time taken to solve** the puzzle at the end of the game ⏱️  
-- Display of the **final solution**, regardless of the game's outcome 🔍  
+---
 
-These features combine the logical aspect of the game with a strategic point and attempt management element, making it more engaging and challenging for the player.
+## ✨ Features Included
+
+The Sudoku application includes the following features:
+
+### 🧠 Three Difficulty Levels
+Choose between **Easy, Medium**, and **Hard**, with 10, 20, and 30 pre-filled numbers respectively.
+
+### ⭐ Points System
+- Earn **+2 points** for every correct number you place.  
+- Lose **-2 points** for each mistake.
+
+### 💡 Hint System
+- You can request **only one hint** per game.  
+- A hint reveals a correct number and its position.
+
+### ⚙️ Auto-Fill Option
+- You can use **only one auto-fill** per game.  
+- It automatically fills in one correct number.
+
+### ♻️ Retry Mechanism
+- If you make **3 mistakes**, you have the option to buy **3 more chances** by spending **5 points**.
+
+### 🧩 Random Puzzle Generator
+- The game generates a complete and valid Sudoku solution.  
+- Then it removes numbers based on the selected difficulty level.
+
+### 🎮 Interactive Console Gameplay
+Play directly from the console by typing your inputs:
+
+- Enter: `row column number` to fill a cell (e.g., `3 4 5`)
+- Type `'h'` to request a hint.
+- Type `'a'` to use the auto-fill option.
+- Type `'0 0 0'` to exit the game.
+
+---
+
+These features combine the logical essence of Sudoku with strategic elements like point management and limited help options — making the game more engaging and challenging for the player.
+
 
 ---
 
