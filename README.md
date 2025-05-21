@@ -102,7 +102,7 @@ These features combine the logical essence of Sudoku with strategic elements lik
 **The game kept going after the second mistake:**
 
 <p align="left">
-  <img src="λάθος 2.png" alt="Sudoku Second Mistake" width="400px">
+  <img src="λαθος 2.png" alt="Sudoku Second Mistake" width="400px">
 </p>
 
 ---
