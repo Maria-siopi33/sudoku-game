@@ -75,9 +75,11 @@ These features combine the logical essence of Sudoku with strategic elements lik
 <p align="left">
   <img src="medium.png" alt="Sudoku Medium Difficulty" width="400px">
 </p>
-The game kept going when i made the first mistake
+**The game kept going when I made the first mistake:**
 
-
+<p align="left">
+  <img src="λάθος.png" alt="Sudoku Mistake Handling" width="400px">
+</p>
 
 
 
