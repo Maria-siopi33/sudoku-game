@@ -46,7 +46,11 @@ Choose between **Easy, Medium**, and **Hard**, with 10, 20, and 30 pre-filled nu
 
 ### ♻️ Retry Mechanism
 - If you make **3 mistakes**, you have the option to buy **3 more chances** by spending **5 points**.
-
+  
+### ⏱️ Timer
+- A **timer** tracks how long it takes you to complete the puzzle.  
+- Your **total time is displayed at the end** of the game.
+  
 ### 🧩 Random Puzzle Generator
 - The game generates a complete and valid Sudoku solution.  
 - Then it removes numbers based on the selected difficulty level.
@@ -65,6 +69,12 @@ These features combine the logical essence of Sudoku with strategic elements lik
 
 
 ---
+## 📸 Screenshots
 
-## Example Screenshot
+### 🧠 Medium Difficulty
+
+
+
+
+
 
