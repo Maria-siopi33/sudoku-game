@@ -72,22 +72,53 @@ These features combine the logical essence of Sudoku with strategic elements lik
 ## 📸 Screenshots
 
 ### 🧠 Medium Difficulty
+
 <p align="left">
   <img src="medium.png" alt="Sudoku Medium Difficulty" width="400px">
 </p>
-The game keep going when i need the first help
-<p align="left">
-  <img src="sudoku 4.png" alt="Sudoku Mistake Handling" width="400px">
-</p>
 
+---
 
-
-**The game kept going when I made the first mistake:**
+**The game kept going when I asked for the first help:**
 
 <p align="left">
-  <img src="λάθος.png" alt="Sudoku Mistake Handling" width="400px">
+  <img src="sudoku 4.png" alt="Sudoku First Help" width="400px">
 </p>
 
+**Then I asked for the second help:**
 
+<p align="left">
+  <img src="sudoku 5.png" alt="Sudoku Second Help" width="400px">
+</p>
+
+---
+
+**The game kept going after the first mistake:**
+
+<p align="left">
+  <img src="λάθος.png" alt="Sudoku First Mistake" width="400px">
+</p>
+
+**The game kept going after the second mistake:**
+
+<p align="left">
+  <img src="λάθος 2.png" alt="Sudoku Second Mistake" width="400px">
+</p>
+
+---
+
+**I made a third mistake, but since I had enough points, I could buy extra chances:**
+
+<p align="left">
+  <img src="agora prospatheivn.png" alt="Sudoku Buy Chances" width="400px">
+</p>
+
+---
+
+**I finished the game successfully:**
+
+<p align="left">
+  <img src="telos paixnidiou.png" alt="Sudoku Game Completed" width="400px">
+</p>
 
 
