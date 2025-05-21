@@ -8,7 +8,7 @@
 #include <cctype>
 #include <iomanip>
 #include <sstream>
-
+//telikos kwdikas
 using namespace std;
 int C = 0;
 const int SIZE = 9;
